@@ -1,0 +1,20 @@
+<table class="table table-bordered table-hover cust"> 
+ <thead> 
+  <tr> 
+   <th width="30%">代码</th> 
+   <th>名字</th> 
+   <th width="80">操作</th> 
+  </tr> 
+ </thead> 
+ <tbody>
+   #foreach($emp in $employeeDatas.resultList) 
+  <tr> 
+   <td>$!{emp.code}</td> 
+   <td>$!{emp.name}</td> 
+   <td> <a href="#" data-url="employee!view.do?empId=$!{emp.id}" data-toggle="modal" data-target="#empEditModal">修改</a> <a href="#" data-url="employee!del.do?empId=$!{emp.id}" class="delete">删除</a> </td> 
+  </tr> #end 
+ </tbody> 
+</table> 
+<div style="text-align: right;width: 100%;"> 
+ <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#empEditModal"><i class="icon-plus"></i>新增</a> 
+</div> #pagination($employeeDatas 'employee_grid')

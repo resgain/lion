@@ -1,0 +1,121 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'war'
+
+description='测试'
+group = 'com.resgain'
+version = new Version(major: 0, minor:1, revision:0)
+
+def springVersion = "3.2.2.RELEASE"
+def springSecurityVersion = "3.1.3.RELEASE"
+def hibernateVersion = "4.2.0.Final"
+def struts2Version = "2.3.14"
+
+sourceCompatibility=1.7
+targetCompatibility=1.7
+
+repositories {
+	mavenCentral()
+    mavenRepo url: 'http://www.springsource.com/repository/'
+    mavenRepo url: 'https://repository.jboss.org/nexus/content/repositories/releases/'
+    mavenRepo url: 'http://code.alibabatech.com/mvn/releases/'
+    mavenRepo url: 'http://maven.mashape.com/releases'
+}
+
+eclipse.classpath.defaultOutputDir(new File("$rootDir/web/WEB-INF/classes"))
+
+war {
+    from "$rootDir/web"
+}
+
+task "createDirs" << {
+	sourceSets*.java.srcDirs*.each { it.mkdirs() }
+	sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+
+	def webappDir = "$rootDir/web"
+	file(webappDir).mkdir()
+	file(webappDir + "/WEB-INF").mkdir()
+	file(webappDir + "/WEB-INF/views").mkdir()
+	file(webappDir + "/META-INF").mkdir()
+} 
+
+task copyJars(type: Copy) {
+  from configurations.providedCompile
+  into '/home/gyl/workspace/lib/ff'
+}
+
+task list(dependsOn: configurations.compile) << {
+    println "${configurations.compile.collect {File file -> '\n' + file.name}}"
+}
+
+dependencies {
+
+    compile("org.slf4j:slf4j-api:1.7.5")
+    compile("ch.qos.logback:logback-classic:1.0.11")
+
+	compile("commons-dbcp:commons-dbcp:1.4")
+	compile("org.apache.velocity:velocity:1.7")
+	compile("org.apache.velocity:velocity-tools:2.0") {
+         exclude(group: 'org.apache.struts')
+    }
+	
+	compile("cglib:cglib-nodep:3.0")
+	compile("javax.mail:mail:1.4.7")
+
+	compile("org.mvel:mvel2:2.1.4.Final")
+	
+	compile("org.jsoup:jsoup:1.7.2")
+	
+	compile("com.alibaba:fastjson:1.1.31")
+
+	compile("org.springframework:spring-tx:$springVersion")
+	compile("org.springframework:spring-jdbc:$springVersion")
+	compile("org.springframework:spring-orm:$springVersion")
+	compile("org.springframework:spring-aop:$springVersion")
+	//compile("org.springframework:spring-webmvc:$springVersion")
+	compile("org.springframework:spring-oxm:$springVersion")
+	compile("org.springframework:spring-jms:$springVersion")
+	compile("org.springframework:spring-aspects:$springVersion")
+	compile("org.aspectj:aspectjrt:1.6.11")
+ 
+	compile("org.springframework.security:spring-security-core:$springSecurityVersion")
+	compile("org.springframework.security:spring-security-web:$springSecurityVersion")
+	compile("org.springframework.security:spring-security-config:$springSecurityVersion")
+	//compile("org.springframework.security:spring-security-taglibs:$springSecurityVersion")
+
+	compile("org.hibernate:hibernate-core:$hibernateVersion")
+	compile("org.hibernate:hibernate-entitymanager:$hibernateVersion")
+	compile("org.hibernate:hibernate-validator:$hibernateVersion")
+	compile("org.hibernate:hibernate-ehcache:$hibernateVersion")
+	
+	compile("org.apache.struts:struts2-core:$struts2Version") {
+         exclude(group: 'commons-logging')
+    }
+	compile("org.apache.struts:struts2-spring-plugin:$struts2Version")
+	compile("org.apache.struts:struts2-convention-plugin:$struts2Version")
+	compile("org.apache.struts:struts2-jasperreports-plugin:$struts2Version")
+	//compile("org.apache.struts:struts2-javatemplates-plugin:$struts2Version")
+	//compile("org.apache.struts:struts2-config-browser-plugin:$struts2Version")
+	
+    providedCompile 'javax.servlet:javax.servlet-api:3.0.1'
+    //providedCompile 'javax:javaee-api:6.0'
+    //providedCompile 'javax:javaee-web-api:6.0'
+
+	testCompile "mysql:mysql-connector-java:5.1.24"   
+
+	testCompile "junit:junit:4.11"
+    testCompile "org.springframework:spring-test:$springVersion"    
+
+    //testRuntime "org.eclipse.jetty:jetty-server:9.0.0.v20130308"
+    testRuntime "org.eclipse.jetty:jetty-webapp:9.0.0.v20130308"
+    testRuntime "org.eclipse.jetty:jetty-jsp:9.0.0.v20130308"      
+}
+
+class Version {
+    int major, minor = 0, revision = 0
+    String stage
+
+    String toString() {
+        "$major.$minor.$revision${stage ? '.' + stage : ''}"
+    }
+}

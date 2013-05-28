@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>$!{TITLE}</title>
+	<script src="$!{webapp}/js/jquery.js"></script>
+	<script src="$!{webapp}/js/jquery.form.js"></script>
+	<script src="$!{webapp}/js/rivets.js"></script>
+	<script src="$!{webapp}/js/bootstrap.js"></script>
+	<script src="$!{webapp}/js/bootstrap_ext.js"></script>
+	<script src="$!{webapp}/js/datetime/bootstrap-datetimepicker.js"></script>
+	<script src="$!{webapp}/js/datetime/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+	<script src="$!{webapp}/js/chosen/chosen.jquery.js"></script>
+	<script src="$!{webapp}/js/chosen/ajax-chosen.js"></script>
+	<script src="$!{webapp}/js/dict.js"></script>
+	<script src="$!{webapp}/js/lion.js"></script>
+	<script> var DICT_ACTION = "$!{webapp}/base/dict.do";</script>
+	<link rel="stylesheet" href="$!{webapp}/css/bootstrap.css" media="all" />
+	<link rel="stylesheet" href="$!{webapp}/js/datetime/css/datetimepicker.css" media="all" />
+	<link rel="stylesheet" href="$!{webapp}/js/chosen/chosen.css" media="all" />
+	<link rel="stylesheet" href="$!{webapp}/css/style.css" media="all" />
+</head>
+<body>
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<a href="#" class="brand">XX管理系统</a>
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+						<li class="dropdown">
+							<a data-toggle="dropdown" data-hover="dropdown" data-delay="300" class="dropdown-toggle" href="#">系统管理<b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="$!{webapp}/base/employee.do">用户管理</a></li>
+								<li><a href="#">部门管理</a></li>
+								<li><a href="#">角色管理</a></li>
+							</ul>
+						</li>
+					</ul>
+					<div class="btn-group pull-right">
+						<a class="btn" href="$!{webapp}/j_spring_security_logout"><i class=" icon-off"></i>退出</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid" style="padding-top: 50px;">
+		<div class="row-fluid">
+		    <ul class="breadcrumb" style="margin: 0 0 10px;">
+			    <li><a href="#">Home</a> <span class="divider">/</span></li>
+		    </ul>
+		</div>
+		{MAIN_BODY}
+	</div>
+</body>
+</html>

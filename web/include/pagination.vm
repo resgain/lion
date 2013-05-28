@@ -1,0 +1,37 @@
+#macro(pagination $pageData $divId)
+	#set($alone_="")
+	#if($divId)
+		#set($alone_="alone_request")
+	#end
+<div style="text-align: center;width: 100%;">
+	<div class="pagination">
+	<ul>
+	#if($pageData.currentPage==1)	
+		<li class="disabled"><a href="#">上一页</a></li>
+		<li class="disabled"><a href="#">首页</a></li>
+	#else
+		#set($ppg=$pageData.currentPage - 1)
+		<li><a href="$!{action.getAction($divId, $ppg)}" class="$!{alone_}" singleId="$!{divId}">上一页</a></li>
+		<li><a href="$!{action.getAction($divId, 1)}" class="$!{alone_}" singleId="$!{divId}">首页</a></li>
+	#end
+	#foreach($pg in $pageData.pages)
+			#if("$pg"=="$pageData.currentPage")
+				<li class="active"><a href="#">$pg</a></li>
+			#else
+				<li><a href="$!{action.getAction($divId, $pg)}" class="$!{alone_}" singleId="$!{divId}">$pg</a></li>
+			#end
+	#end	
+	#set($mpg=$pageData.pages.size()+$pageData.page)
+
+	#if($pageData.currentPage==$pageData.maxPage)	
+		<li class="disabled"><a href="#">末页</a></li>
+		<li class="disabled"><a href="#">下一页</a></li>
+	#else
+		#set($npg=$pageData.currentPage+1)
+		<li><a href="$!{action.getAction($divId, $pageData.maxPage)}" class="$!{alone_}" singleId="$!{divId}">末页</a></li>
+		<li class="nextpage"><a href="$!{action.getAction($divId, $npg)}" class="$!{alone_}" singleId="$!{divId}">下一页</a></li>
+	#end	
+	</ul>
+	</div>
+</div>
+#end

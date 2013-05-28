@@ -1,0 +1,15 @@
+table.cust thead tr th {
+	background-color: #F5F5F5;
+}
+
+table.cust tbody tr td a {
+	padding-left: 5px;
+}
+
+.ajaxform{
+	margin: 0px;
+}
+
+.control-group .control-label{
+	font-weight: bold;
+}
